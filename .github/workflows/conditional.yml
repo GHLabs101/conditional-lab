@@ -1,0 +1,22 @@
+name: Conditional Logic Demo
+
+on:
+  push:
+    branches: [main, feature/*]
+
+jobs:
+  conditional-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy
+        run: echo "Deploying to Production!"
+        if: github.ref == 'refs/heads/main'
+
+      - name: Run Tests
+        run: |
+          echo "Running tests on feature branch!"
+          exit 0
+        if: startsWith(github.ref, 'refs/heads/feature/')
